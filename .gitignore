@@ -1,0 +1,19 @@
+# Python virtual environment
+/supersonic/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Generated animation frames
+outputs/live/frames/.venv/
+venv/
+jax-env/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+/supersonic/
+/supersonic/
