@@ -18,6 +18,14 @@ python JAX_Supersonic_Cone_Solver.py        # 100 x 100 grid, 3000 steps; plots 
 
 `cone_solver_live.ipynb` runs the same solver with live plots.
 
+## Flow fields
+
+Primitive variables for viscous Mach 5 flow over the 10° cone, from `python JAX_Supersonic_Cone_Solver.py` (100 × 100 grid, 3000 steps):
+
+![Flow fields](outputs/fields.png)
+
+![Mach number](outputs/mach.png)
+
 ## Validation against Taylor–Maccoll
 
 With viscosity switched off and a slip wall, the same scheme reproduces the inviscid Taylor–Maccoll conical-flow solution for Mach 5 and a 10° cone:
@@ -27,7 +35,7 @@ With viscosity switched off and a slip wall, the same scheme reproduces the invi
 | Shock angle | 15.61° | 15.58° |
 | Surface pressure $p/p_\infty$ | 2.308 | 2.304 (within 0.5% for $s/L > 0.6$) |
 
-![Taylor–Maccoll validation](figures/taylor_maccoll_validation.png)
+![Surface pressure vs Taylor–Maccoll](figures/surface_pressure_taylor_maccoll.png)
 
 To reproduce (takes a while on a CPU):
 
@@ -39,5 +47,3 @@ python validation/run_taylor_maccoll.py --quick   # short smoke test
 `validation/harness.py` reuses the solver's derivative, flux, metric and source functions and adds switches for an inviscid slip wall and pressure-switched artificial dissipation; `validation/references.py` integrates the Taylor–Maccoll equation.
 
 With viscosity on, the surface pressure is higher than the inviscid value because of viscous interaction (boundary-layer displacement), which grows as the Reynolds number falls.
-
-
