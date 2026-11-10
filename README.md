@@ -40,12 +40,4 @@ python validation/run_taylor_maccoll.py --quick   # short smoke test
 
 With viscosity on, the surface pressure is higher than the inviscid value because of viscous interaction (boundary-layer displacement), which grows as the Reynolds number falls.
 
-## Note on the source term
 
-An earlier version multiplied the axisymmetric source term by 1 instead of by the Jacobian $J$:
-
-```python
-S = jnp.zeros_like(U).at[2].set(J * S2)   # was .set(S2)
-```
-
-The conserved variables and fluxes are scaled by $J$, so the source term must be too. Without it, a uniform flow is not preserved on the sheared grid and the solution carries a spurious radial force.
