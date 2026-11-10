@@ -247,7 +247,9 @@ def make_step_fn(dxi, deta, dt, cp, cv, R, Prandtl, mu_o, Rad, Y, J,
 
         
         S2 = axisym_radial_source(v, P, mu, dudxi_F, dvdeta_F, Rad)
-        S = jnp.zeros_like(U).at[2].set(S2)
+        # Source term must carry the grid Jacobian J, like the J*Rad-weighted U and fluxes;
+        # without it a uniform flow is not preserved on the sheared grid.
+        S = jnp.zeros_like(U).at[2].set(J * S2)
 
         E_eps = J[None] * Enew * xix[None] * Rad[None] + \
                 J[None] * Fnew * xiy[None] * Y[None]
@@ -288,7 +290,7 @@ def make_step_fn(dxi, deta, dt, cp, cv, R, Prandtl, mu_o, Rad, Y, J,
                       dudeta_F, dvdxi_F, dvdeta_F, dudxi_F, dTdeta, Rad)
 
         S2 = axisym_radial_source(v, P, mu, dudxi_F, dvdeta_F, Rad)
-        S = jnp.zeros_like(Ubar).at[2].set(S2)
+        S = jnp.zeros_like(Ubar).at[2].set(J * S2)  # see note in predictor
 
         E_eps = J[None] * Enew * xix[None] * Rad[None] + \
                 J[None] * Fnew * xiy[None] * Y[None]
